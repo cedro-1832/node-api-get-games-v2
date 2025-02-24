@@ -1,0 +1,43 @@
+service: get-games-api
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: us-east-1
+  stage: dev
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - lambda:InvokeFunction
+        - logs:CreateLogStream
+        - logs:CreateLogGroup
+        - logs:PutLogEvents
+        - dynamodb:Scan
+      Resource: "*"
+
+functions:
+  getGames:
+    handler: server.handler
+    memorySize: 256
+    timeout: 10
+    package:
+      exclude:
+        - node_modules/**
+    events:
+      - http:
+          path: api/games
+          method: get
+          cors: true
+
+  authLogin:
+    handler: server.handler
+    memorySize: 256
+    timeout: 10
+    package:
+      exclude:
+        - node_modules/**
+    events:
+      - http:
+          path: api/auth/login
+          method: post
+          cors: true
