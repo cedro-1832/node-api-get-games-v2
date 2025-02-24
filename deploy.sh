@@ -17,8 +17,8 @@ rm -rf node_modules package-lock.json .serverless/ get-games.zip
 npm install --omit=dev  # Evitar dependencias de desarrollo
 npm install serverless-http  # 🔴 Asegurar que serverless-http está instalado
 
-# 🗑️ [3/9] Eliminando archivos innecesarios
-echo "🗑️ Eliminando archivos innecesarios para reducir el tamaño del paquete..."
+# 🗑️ [3/9] Eliminando archivos innecesarios para reducir el tamaño del paquete
+echo "🗑️ Eliminando archivos innecesarios..."
 find . -name "*.zip" -type f -delete
 find . -name "*.log" -type f -delete
 rm -rf .serverless/ node_modules/.bin/ tests/ docs/
@@ -27,7 +27,7 @@ rm -rf .serverless/ node_modules/.bin/ tests/ docs/
 echo "🔧 Construyendo el proyecto..."
 rm -rf "$DEPLOY_DIR"
 mkdir -p "$DEPLOY_DIR"
-cp -r server.js package.json node_modules config controllers middlewares models routes "$DEPLOY_DIR"
+cp -r server.js package.json config controllers middlewares models routes "$DEPLOY_DIR"
 
 # 📤 [5/9] Empaquetar código para AWS Lambda
 echo "📤 Empaquetando código para AWS Lambda..."
@@ -52,7 +52,6 @@ if ! aws iam get-role --role-name "$IAM_ROLE_NAME" --region "$AWS_REGION" --prof
         }' \
         --region "$AWS_REGION" --profile "$AWS_PROFILE"
 
-    # Asignar permisos al role
     aws iam attach-role-policy --role-name "$IAM_ROLE_NAME" \
         --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole \
         --region "$AWS_REGION" --profile "$AWS_PROFILE"
