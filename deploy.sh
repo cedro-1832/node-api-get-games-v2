@@ -21,7 +21,7 @@ npm install serverless-http  # 🔴 Asegurar que serverless-http está instalado
 echo "🗑️ Eliminando archivos innecesarios para reducir el tamaño del paquete..."
 find . -name "*.zip" -type f -delete
 find . -name "*.log" -type f -delete
-rm -rf .serverless/ node_modules/.bin/
+rm -rf .serverless/ node_modules/.bin/ tests/ docs/
 
 # 🏗️ [4/9] Construir la aplicación
 echo "🔧 Construyendo el proyecto..."
@@ -32,7 +32,7 @@ cp -r server.js package.json node_modules config controllers middlewares models 
 # 📤 [5/9] Empaquetar código para AWS Lambda
 echo "📤 Empaquetando código para AWS Lambda..."
 cd "$DEPLOY_DIR"
-zip -r "../$FUNCTION_NAME.zip" ./*
+zip -r "../$FUNCTION_NAME.zip" ./* -x "node_modules/aws-sdk/**"
 cd ..
 
 # 🔍 [6/9] Verificar si el IAM Role existe, si no, crearlo
