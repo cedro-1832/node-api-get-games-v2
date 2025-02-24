@@ -35,35 +35,6 @@ cd "$DEPLOY_DIR"
 zip -r "../$FUNCTION_NAME.zip" ./* -x "node_modules/aws-sdk/**"
 cd ..
 
-# 🔍 Verificar si el IAM Role existe, si no, crearlo
-echo "🔍 Verificando si el IAM Role $IAM_ROLE_NAME existe..."
-if ! aws iam get-role --role-name "$IAM_ROLE_NAME" --region "$AWS_REGION" --profile "$AWS_PROFILE" &>/dev/null; then
-    echo "🚀 Creando IAM Role para Lambda..."
-    aws iam create-role --role-name "$IAM_ROLE_NAME" \
-        --assume-role-policy-document '{
-            "Version": "2012-10-17",
-            "Statement": [
-                {
-                    "Effect": "Allow",
-                    "Principal": { "Service": "lambda.amazonaws.com" },
-                    "Action": "sts:AssumeRole"
-                }
-            ]
-        }' \
-        --region "$AWS_REGION" --profile "$AWS_PROFILE"
-
-    aws iam attach-role-policy --role-name "$IAM_ROLE_NAME" \
-        --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole \
-        --region "$AWS_REGION" --profile "$AWS_PROFILE"
-    
-    echo "✅ IAM Role creado y configurado."
-else
-    echo "✅ IAM Role ya existe."
-fi
-
-# 🔍 Obtener ARN del role
-IAM_ROLE_ARN=$(aws iam get-role --role-name "$IAM_ROLE_NAME" --query 'Role.Arn' --output text --region "$AWS_REGION" --profile "$AWS_PROFILE")
-
 # 🔍 Verificar si la función Lambda ya existe
 echo "🔍 Verificando si la función Lambda $FUNCTION_NAME existe en AWS..."
 if aws lambda get-function --function-name "$FUNCTION_NAME" --region "$AWS_REGION" --profile "$AWS_PROFILE" &>/dev/null; then
