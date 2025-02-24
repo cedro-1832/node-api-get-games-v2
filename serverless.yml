@@ -1,4 +1,4 @@
-service: get-games-api  # ✅ Agregar esta línea para definir el servicio
+service: get-games-api  # ✅ Se agregó el nombre del servicio
 
 provider:
   name: aws
@@ -17,7 +17,7 @@ functions:
         - node_modules/aws-sdk/**
     events:
       - http:
-          path: api/games
+          path: dev/api/games
           method: get
           cors: true
 
@@ -31,6 +31,6 @@ functions:
         - node_modules/aws-sdk/**
     events:
       - http:
-          path: api/auth/login
+          path: dev/api/auth/login
           method: post
           cors: true
