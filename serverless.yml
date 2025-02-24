@@ -1,20 +1,3 @@
-service: get-games-api
-
-provider:
-  name: aws
-  runtime: nodejs20.x
-  region: us-east-1
-  stage: dev
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - lambda:InvokeFunction
-        - logs:CreateLogStream
-        - logs:CreateLogGroup
-        - logs:PutLogEvents
-        - dynamodb:Scan
-      Resource: "*"
-
 functions:
   getGames:
     handler: server.handler
@@ -23,6 +6,7 @@ functions:
     package:
       exclude:
         - node_modules/**
+        - node_modules/aws-sdk/** # Excluir AWS SDK
     events:
       - http:
           path: api/games
@@ -36,6 +20,7 @@ functions:
     package:
       exclude:
         - node_modules/**
+        - node_modules/aws-sdk/** # Excluir AWS SDK
     events:
       - http:
           path: api/auth/login

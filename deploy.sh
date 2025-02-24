@@ -21,7 +21,7 @@ npm install serverless-http  # 🔴 Asegurar que serverless-http está instalado
 echo "🗑️ Eliminando archivos innecesarios..."
 find . -name "*.zip" -type f -delete
 find . -name "*.log" -type f -delete
-rm -rf .serverless/ node_modules/.bin/ tests/ docs/
+rm -rf .serverless/ node_modules/.bin/ tests/ docs/ node_modules/aws-sdk/
 
 # 🏗️ [4/9] Construir la aplicación
 echo "🔧 Construyendo el proyecto..."
