@@ -1,3 +1,11 @@
+service: get-games-api  # ✅ Agregar esta línea para definir el servicio
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  stage: dev
+  region: us-east-1
+
 functions:
   getGames:
     handler: server.handler
@@ -6,7 +14,7 @@ functions:
     package:
       exclude:
         - node_modules/**
-        - node_modules/aws-sdk/** # Excluir AWS SDK
+        - node_modules/aws-sdk/**
     events:
       - http:
           path: api/games
@@ -20,7 +28,7 @@ functions:
     package:
       exclude:
         - node_modules/**
-        - node_modules/aws-sdk/** # Excluir AWS SDK
+        - node_modules/aws-sdk/**
     events:
       - http:
           path: api/auth/login

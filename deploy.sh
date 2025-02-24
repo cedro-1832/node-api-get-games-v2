@@ -17,7 +17,7 @@ rm -rf node_modules package-lock.json .serverless/ get-games.zip
 npm install --omit=dev  # Evitar dependencias de desarrollo
 npm install serverless-http  # 🔴 Asegurar que serverless-http está instalado
 
-# 🗑️ [3/9] Eliminando archivos innecesarios para reducir el tamaño del paquete
+# 🗑️ [3/9] Eliminando archivos innecesarios
 echo "🗑️ Eliminando archivos innecesarios..."
 find . -name "*.zip" -type f -delete
 find . -name "*.log" -type f -delete
