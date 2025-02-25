@@ -6,7 +6,7 @@ provider:
   stage: dev
   region: us-east-1
   deploymentBucket:
-    name: serverless-framework-deployments-us-east-1-3e2cf282-a30b  # Usa un bucket predefinido
+    name: serverless-framework-deployments-us-east-1-3e2cf282-a30b
   iam:
     role:
       statements:
@@ -35,7 +35,15 @@ provider:
             - s3:PutObject
             - s3:GetObject
             - s3:ListBucket
+            - s3:DeleteObject
           Resource: "arn:aws:s3:::serverless-framework-deployments-us-east-1-3e2cf282-a30b"
+
+        - Effect: Allow
+          Action:
+            - ssm:PutParameter
+            - ssm:GetParameter
+            - ssm:DeleteParameter
+          Resource: "arn:aws:ssm:us-east-1:*:*"
 
 functions:
   getGames:
