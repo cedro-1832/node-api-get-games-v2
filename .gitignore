@@ -1,26 +1,47 @@
-# Archivos de Serverless
+# Archivos generados por Serverless Framework
 .serverless/
+serverless/
 serverless/get-games-api.zip
+serverless/cloudformation-template-update-stack.json
 .serverless/meta.json
 .serverless/serverless-state.json
 get-games.zip
 
 # Dependencias de Node.js
 node_modules/
+node_modules/@*/package.json
+node_modules/@smith*/index.js
+node_modules/@*/node-http-handler.js
+node_modules/@*/set-socket-timeout.js
+node_modules/@*/package.json
+node_modules/@*/package.json
+node_modules/@*/package.json
+node_modules/@*/package.json
+node_modules/@*/package.json
 package-lock.json
 
-# Archivos de configuración sensibles
+# Archivos de logs y depuración
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Archivos del entorno
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
-# Archivos de compilación y logs
+# Archivos de compilación
 dist/
 build/
-tmp/
-logs/
-*.log
-npm-debug.log*
-yarn-debug.log*
+.tmp/
+
+# Archivos del sistema operativo y editores
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
