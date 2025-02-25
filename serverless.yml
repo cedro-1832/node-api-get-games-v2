@@ -5,6 +5,8 @@ provider:
   runtime: nodejs20.x
   stage: dev
   region: us-east-1
+  deploymentBucket:
+    name: serverless-framework-deployments-us-east-1-3e2cf282-a30b  # Usa un bucket predefinido
   iam:
     role:
       statements:
@@ -26,6 +28,13 @@ provider:
           Action:
             - execute-api:Invoke
           Resource: "*"
+
+        - Effect: Allow 
+          Action:
+            - s3:CreateBucket
+            - s3:PutObject
+            - s3:GetObject
+          Resource: "arn:aws:s3:::serverless-framework-deployments-us-east-1-3e2cf282-a30b"
 
 functions:
   getGames:

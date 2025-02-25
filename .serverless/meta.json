@@ -35,7 +35,7 @@
                 "Action": [
                   "execute-api:Invoke"
                 ],
-                "Resource": "arn:aws:execute-api:us-east-1:${AWS::AccountId}:*/*/*"
+                "Resource": "*"
               }
             ]
           }
@@ -47,11 +47,6 @@
           "handler": "server.handler",
           "memorySize": 256,
           "timeout": 10,
-          "package": {
-            "exclude": [
-              "node_modules/aws-sdk/**"
-            ]
-          },
           "events": [
             {
               "http": {
@@ -67,11 +62,6 @@
           "handler": "server.handler",
           "memorySize": 256,
           "timeout": 10,
-          "package": {
-            "exclude": [
-              "node_modules/aws-sdk/**"
-            ]
-          },
           "events": [
             {
               "http": {
@@ -115,7 +105,7 @@
               "Action": [
                 "execute-api:Invoke"
               ],
-              "Resource": "arn:aws:execute-api:us-east-1:${AWS::AccountId}:*/*/*"
+              "Resource": "*"
             }
           ]
         }
@@ -131,13 +121,18 @@
       "serviceProvider": null,
       "instanceParameters": null
     },
-    "serviceRawFile": "service: get-games-api\n\nprovider:\n  name: aws\n  runtime: nodejs20.x\n  stage: dev\n  region: us-east-1\n  iam:\n    role:\n      statements:\n        - Effect: Allow\n          Action:\n            - logs:CreateLogGroup\n            - logs:CreateLogStream\n            - logs:PutLogEvents\n          Resource: \"arn:aws:logs:us-east-1:*:*\"\n\n        - Effect: Allow\n          Action:\n            - dynamodb:Scan\n            - dynamodb:GetItem\n          Resource: \"arn:aws:dynamodb:us-east-1:${AWS::AccountId}:table/PlayStationGames\"\n\n        - Effect: Allow\n          Action:\n            - execute-api:Invoke\n          Resource: \"arn:aws:execute-api:us-east-1:${AWS::AccountId}:*/*/*\"\n\nfunctions:\n  getGames:\n    handler: server.handler\n    memorySize: 256\n    timeout: 10\n    package:\n      exclude:\n        - node_modules/aws-sdk/**\n    events:\n      - http:\n          path: api/games\n          method: get\n          cors: true\n\n  authLogin:\n    handler: server.handler\n    memorySize: 256\n    timeout: 10\n    package:\n      exclude:\n        - node_modules/aws-sdk/**\n    events:\n      - http:\n          path: api/auth/login\n          method: post\n          cors: true\n",
+    "error": {
+      "message": "Access denied when storing the parameter \"/serverless-framework/deployment/s3-bucket\". Please check your permissions and try again. You have the following options:\n• Ensure you have permission to create SSM and S3 resources.\n• Use the \"provider.deploymentBucket\" field to specify an existing S3 bucket.\n• Manually create the S3 bucket and SSM parameter.\n\nFor more details, please refer to the documentation: https://www.serverless.com/framework/docs/guides/deployment-bucket\n\nOriginal error: User: arn:aws:iam::249181214292:user/serverless-deployer is not authorized to perform: s3:CreateBucket on resource: \"arn:aws:s3:::serverless-framework-deployments-us-east-1-3e2cf282-a30b\" with an explicit deny in an identity-based policy",
+      "code": "DEPLOYMENT_BUCKET_INSUFFICIENT_PERMISSIONS"
+    },
+    "serviceRawFile": "service: get-games-api\n\nprovider:\n  name: aws\n  runtime: nodejs20.x\n  stage: dev\n  region: us-east-1\n  iam:\n    role:\n      statements:\n        - Effect: Allow\n          Action:\n            - logs:CreateLogGroup\n            - logs:CreateLogStream\n            - logs:PutLogEvents\n          Resource: \"arn:aws:logs:us-east-1:*:*\"\n\n        - Effect: Allow\n          Action:\n            - dynamodb:Scan\n            - dynamodb:GetItem\n          Resource:\n            - \"arn:aws:dynamodb:us-east-1:${AWS::AccountId}:table/PlayStationGames\"\n\n        - Effect: Allow\n          Action:\n            - execute-api:Invoke\n          Resource: \"*\"\n\nfunctions:\n  getGames:\n    handler: server.handler\n    memorySize: 256\n    timeout: 10\n    events:\n      - http:\n          path: api/games\n          method: get\n          cors: true\n\n  authLogin:\n    handler: server.handler\n    memorySize: 256\n    timeout: 10\n    events:\n      - http:\n          path: api/auth/login\n          method: post\n          cors: true\n",
     "command": [
-      "logs"
+      "deploy"
     ],
     "options": {
-      "function": "getGames",
-      "stage": "dev"
+      "stage": "dev",
+      "region": "us-east-1",
+      "aws-profile": "serverless-deployer"
     },
     "orgId": "dc89384e-edb5-4e81-9e94-26134aff1a0f",
     "orgName": "ianews2025",

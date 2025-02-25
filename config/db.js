@@ -8,12 +8,12 @@ if (!process.env.AWS_REGION) {
 
 const client = new DynamoDBClient({
   region: process.env.AWS_REGION,
-  credentials: process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY
-    ? {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-      }
-    : undefined, // Si está en AWS Lambda, usa las credenciales del IAM Role
+  credentials: process.env.AWS_PROFILE
+    ? undefined  // Si se usa AWS_PROFILE, no cargar credenciales manualmente
+    : {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
+      },
 });
 
 const dynamoDB = DynamoDBDocumentClient.from(client);
