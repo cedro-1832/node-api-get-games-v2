@@ -23,21 +23,11 @@ find . -name "*.zip" -type f -delete
 find . -name "*.log" -type f -delete
 rm -rf .serverless/ node_modules/.bin/ tests/ docs/ node_modules/aws-sdk/
 
-# 🏗️ Construir la aplicación
-echo "🔧 Construyendo el proyecto..."
-rm -rf "$DEPLOY_DIR"
-mkdir -p "$DEPLOY_DIR"
-cp -r server.js package.json config controllers middlewares models routes "$DEPLOY_DIR"
-
-# 📤 Empaquetar código para AWS Lambda
-echo "📤 Empaquetando código para AWS Lambda..."
-cd "$DEPLOY_DIR"
-zip -r "../$FUNCTION_NAME.zip" ./* -x "node_modules/aws-sdk/**"
-cd ..
-
-# 🔍 Verificar si el IAM Role existe, si no, crearlo
+# 🔍 Verificar si el IAM Role existe
 echo "🔍 Verificando si el IAM Role $IAM_ROLE_NAME existe..."
-if ! aws iam get-role --role-name "$IAM_ROLE_NAME" --region "$AWS_REGION" --profile "$AWS_PROFILE" &>/dev/null; then
+IAM_ROLE_EXISTS=$(aws iam get-role --role-name "$IAM_ROLE_NAME" --query 'Role.RoleName' --output text --region "$AWS_REGION" --profile "$AWS_PROFILE" || true)
+
+if [[ -z "$IAM_ROLE_EXISTS" ]]; then
     echo "🚀 Creando IAM Role para Lambda..."
     aws iam create-role --role-name "$IAM_ROLE_NAME" \
         --assume-role-policy-document '{
@@ -62,27 +52,6 @@ else
     echo "✅ IAM Role ya existe."
 fi
 
-# 🔍 Obtener ARN del role
-IAM_ROLE_ARN=$(aws iam get-role --role-name "$IAM_ROLE_NAME" --query 'Role.Arn' --output text --region "$AWS_REGION" --profile "$AWS_PROFILE")
-
-# 🔍 Verificar si la función Lambda ya existe
-echo "🔍 Verificando si la función Lambda $FUNCTION_NAME existe en AWS..."
-if aws lambda get-function --function-name "$FUNCTION_NAME" --region "$AWS_REGION" --profile "$AWS_PROFILE" &>/dev/null; then
-    echo "📤 Actualizando código de la función Lambda..."
-    aws lambda update-function-code --function-name "$FUNCTION_NAME" \
-        --zip-file "fileb://$FUNCTION_NAME.zip" \
-        --region "$AWS_REGION" --profile "$AWS_PROFILE"
-else
-    echo "🚀 Creando nueva función Lambda..."
-    aws lambda create-function --function-name "$FUNCTION_NAME" \
-        --runtime "nodejs20.x" \
-        --role "$IAM_ROLE_ARN" \
-        --handler "server.handler" \
-        --zip-file "fileb://$FUNCTION_NAME.zip" \
-        --timeout 15 \
-        --memory-size 128 \
-        --region "$AWS_REGION" --profile "$AWS_PROFILE"
-fi
 
 echo "✅ Función Lambda lista."
 
