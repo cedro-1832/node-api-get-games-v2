@@ -44,9 +44,19 @@
                   "s3:CreateBucket",
                   "s3:PutObject",
                   "s3:GetObject",
-                  "s3:ListBucket"
+                  "s3:ListBucket",
+                  "s3:DeleteObject"
                 ],
                 "Resource": "arn:aws:s3:::serverless-framework-deployments-us-east-1-3e2cf282-a30b"
+              },
+              {
+                "Effect": "Allow",
+                "Action": [
+                  "ssm:PutParameter",
+                  "ssm:GetParameter",
+                  "ssm:DeleteParameter"
+                ],
+                "Resource": "arn:aws:ssm:us-east-1:*:*"
               }
             ]
           }
@@ -159,9 +169,19 @@
                             "s3:CreateBucket",
                             "s3:PutObject",
                             "s3:GetObject",
-                            "s3:ListBucket"
+                            "s3:ListBucket",
+                            "s3:DeleteObject"
                           ],
                           "Resource": "arn:aws:s3:::serverless-framework-deployments-us-east-1-3e2cf282-a30b"
+                        },
+                        {
+                          "Effect": "Allow",
+                          "Action": [
+                            "ssm:PutParameter",
+                            "ssm:GetParameter",
+                            "ssm:DeleteParameter"
+                          ],
+                          "Resource": "arn:aws:ssm:us-east-1:*:*"
                         }
                       ]
                     }
@@ -188,7 +208,7 @@
               "Properties": {
                 "Code": {
                   "S3Bucket": "serverless-framework-deployments-us-east-1-3e2cf282-a30b",
-                  "S3Key": "serverless/get-games-api/dev/1740454425020-2025-02-25T03:33:45.020Z/get-games-api.zip"
+                  "S3Key": "serverless/get-games-api/dev/1740454705527-2025-02-25T03:38:25.527Z/get-games-api.zip"
                 },
                 "Handler": "server.handler",
                 "Runtime": "nodejs20.x",
@@ -211,7 +231,7 @@
               "Properties": {
                 "Code": {
                   "S3Bucket": "serverless-framework-deployments-us-east-1-3e2cf282-a30b",
-                  "S3Key": "serverless/get-games-api/dev/1740454425020-2025-02-25T03:33:45.020Z/get-games-api.zip"
+                  "S3Key": "serverless/get-games-api/dev/1740454705527-2025-02-25T03:38:25.527Z/get-games-api.zip"
                 },
                 "Handler": "server.handler",
                 "Runtime": "nodejs20.x",
@@ -229,24 +249,24 @@
                 "AuthLoginLogGroup"
               ]
             },
-            "GetGamesLambdaVersionTXm5IwYkZ8bRalwjFsEtyFFxg9K9aC5wI4hsKiXLdh4": {
+            "GetGamesLambdaVersion1k9eJIsRCLWEJf4e2AES0DDlaFxafuebbCVz2lyiy0": {
               "Type": "AWS::Lambda::Version",
               "DeletionPolicy": "Retain",
               "Properties": {
                 "FunctionName": {
                   "Ref": "GetGamesLambdaFunction"
                 },
-                "CodeSha256": "taF8q39hmPXVAc9FZg5z+CGfDuwXkg9pbDf/A/2e47o="
+                "CodeSha256": "dklZzJpoZ2m0rSMAJqEIco10WiB0Zc9mhvaW4abkyEc="
               }
             },
-            "AuthLoginLambdaVersiongZXmrwMjfJrJq82wVMlQglkpwRnhQ8cT03bjvFvK8s": {
+            "AuthLoginLambdaVersion7vKPIsuQeAc6KcrV0avVEXLnitUTIoub1KPp9ixoPY": {
               "Type": "AWS::Lambda::Version",
               "DeletionPolicy": "Retain",
               "Properties": {
                 "FunctionName": {
                   "Ref": "AuthLoginLambdaFunction"
                 },
-                "CodeSha256": "taF8q39hmPXVAc9FZg5z+CGfDuwXkg9pbDf/A/2e47o="
+                "CodeSha256": "dklZzJpoZ2m0rSMAJqEIco10WiB0Zc9mhvaW4abkyEc="
               }
             },
             "ApiGatewayRestApi": {
@@ -494,7 +514,7 @@
                 "AuthLoginLambdaPermissionApiGateway"
               ]
             },
-            "ApiGatewayDeployment1740454416654": {
+            "ApiGatewayDeployment1740454697496": {
               "Type": "AWS::ApiGateway::Deployment",
               "Properties": {
                 "RestApiId": {
@@ -594,7 +614,7 @@
             "GetGamesLambdaFunctionQualifiedArn": {
               "Description": "Current Lambda function version",
               "Value": {
-                "Ref": "GetGamesLambdaVersionTXm5IwYkZ8bRalwjFsEtyFFxg9K9aC5wI4hsKiXLdh4"
+                "Ref": "GetGamesLambdaVersion1k9eJIsRCLWEJf4e2AES0DDlaFxafuebbCVz2lyiy0"
               },
               "Export": {
                 "Name": "sls-get-games-api-dev-GetGamesLambdaFunctionQualifiedArn"
@@ -603,7 +623,7 @@
             "AuthLoginLambdaFunctionQualifiedArn": {
               "Description": "Current Lambda function version",
               "Value": {
-                "Ref": "AuthLoginLambdaVersiongZXmrwMjfJrJq82wVMlQglkpwRnhQ8cT03bjvFvK8s"
+                "Ref": "AuthLoginLambdaVersion7vKPIsuQeAc6KcrV0avVEXLnitUTIoub1KPp9ixoPY"
               },
               "Export": {
                 "Name": "sls-get-games-api-dev-AuthLoginLambdaFunctionQualifiedArn"
@@ -675,7 +695,7 @@
           "memory": 256,
           "runtime": "nodejs20.x",
           "vpc": {},
-          "versionLogicalId": "GetGamesLambdaVersionTXm5IwYkZ8bRalwjFsEtyFFxg9K9aC5wI4hsKiXLdh4"
+          "versionLogicalId": "GetGamesLambdaVersion1k9eJIsRCLWEJf4e2AES0DDlaFxafuebbCVz2lyiy0"
         },
         "authLogin": {
           "handler": "server.handler",
@@ -712,7 +732,7 @@
           "memory": 256,
           "runtime": "nodejs20.x",
           "vpc": {},
-          "versionLogicalId": "AuthLoginLambdaVersiongZXmrwMjfJrJq82wVMlQglkpwRnhQ8cT03bjvFvK8s"
+          "versionLogicalId": "AuthLoginLambdaVersion7vKPIsuQeAc6KcrV0avVEXLnitUTIoub1KPp9ixoPY"
         }
       }
     },
@@ -755,9 +775,19 @@
                 "s3:CreateBucket",
                 "s3:PutObject",
                 "s3:GetObject",
-                "s3:ListBucket"
+                "s3:ListBucket",
+                "s3:DeleteObject"
               ],
               "Resource": "arn:aws:s3:::serverless-framework-deployments-us-east-1-3e2cf282-a30b"
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "ssm:PutParameter",
+                "ssm:GetParameter",
+                "ssm:DeleteParameter"
+              ],
+              "Resource": "arn:aws:ssm:us-east-1:*:*"
             }
           ]
         }
@@ -870,9 +900,19 @@
                           "s3:CreateBucket",
                           "s3:PutObject",
                           "s3:GetObject",
-                          "s3:ListBucket"
+                          "s3:ListBucket",
+                          "s3:DeleteObject"
                         ],
                         "Resource": "arn:aws:s3:::serverless-framework-deployments-us-east-1-3e2cf282-a30b"
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "ssm:PutParameter",
+                          "ssm:GetParameter",
+                          "ssm:DeleteParameter"
+                        ],
+                        "Resource": "arn:aws:ssm:us-east-1:*:*"
                       }
                     ]
                   }
@@ -899,7 +939,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-1-3e2cf282-a30b",
-                "S3Key": "serverless/get-games-api/dev/1740454425020-2025-02-25T03:33:45.020Z/get-games-api.zip"
+                "S3Key": "serverless/get-games-api/dev/1740454705527-2025-02-25T03:38:25.527Z/get-games-api.zip"
               },
               "Handler": "server.handler",
               "Runtime": "nodejs20.x",
@@ -922,7 +962,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-1-3e2cf282-a30b",
-                "S3Key": "serverless/get-games-api/dev/1740454425020-2025-02-25T03:33:45.020Z/get-games-api.zip"
+                "S3Key": "serverless/get-games-api/dev/1740454705527-2025-02-25T03:38:25.527Z/get-games-api.zip"
               },
               "Handler": "server.handler",
               "Runtime": "nodejs20.x",
@@ -940,24 +980,24 @@
               "AuthLoginLogGroup"
             ]
           },
-          "GetGamesLambdaVersionTXm5IwYkZ8bRalwjFsEtyFFxg9K9aC5wI4hsKiXLdh4": {
+          "GetGamesLambdaVersion1k9eJIsRCLWEJf4e2AES0DDlaFxafuebbCVz2lyiy0": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetGamesLambdaFunction"
               },
-              "CodeSha256": "taF8q39hmPXVAc9FZg5z+CGfDuwXkg9pbDf/A/2e47o="
+              "CodeSha256": "dklZzJpoZ2m0rSMAJqEIco10WiB0Zc9mhvaW4abkyEc="
             }
           },
-          "AuthLoginLambdaVersiongZXmrwMjfJrJq82wVMlQglkpwRnhQ8cT03bjvFvK8s": {
+          "AuthLoginLambdaVersion7vKPIsuQeAc6KcrV0avVEXLnitUTIoub1KPp9ixoPY": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "AuthLoginLambdaFunction"
               },
-              "CodeSha256": "taF8q39hmPXVAc9FZg5z+CGfDuwXkg9pbDf/A/2e47o="
+              "CodeSha256": "dklZzJpoZ2m0rSMAJqEIco10WiB0Zc9mhvaW4abkyEc="
             }
           },
           "ApiGatewayRestApi": {
@@ -1205,7 +1245,7 @@
               "AuthLoginLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayDeployment1740454416654": {
+          "ApiGatewayDeployment1740454697496": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -1305,7 +1345,7 @@
           "GetGamesLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetGamesLambdaVersionTXm5IwYkZ8bRalwjFsEtyFFxg9K9aC5wI4hsKiXLdh4"
+              "Ref": "GetGamesLambdaVersion1k9eJIsRCLWEJf4e2AES0DDlaFxafuebbCVz2lyiy0"
             },
             "Export": {
               "Name": "sls-get-games-api-dev-GetGamesLambdaFunctionQualifiedArn"
@@ -1314,7 +1354,7 @@
           "AuthLoginLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "AuthLoginLambdaVersiongZXmrwMjfJrJq82wVMlQglkpwRnhQ8cT03bjvFvK8s"
+              "Ref": "AuthLoginLambdaVersion7vKPIsuQeAc6KcrV0avVEXLnitUTIoub1KPp9ixoPY"
             },
             "Export": {
               "Name": "sls-get-games-api-dev-AuthLoginLambdaFunctionQualifiedArn"
@@ -1364,7 +1404,7 @@
       "stack": "ServerlessError3: User: arn:aws:iam::249181214292:user/serverless-deployer is not authorized to perform: s3:ListBucket on resource: \"arn:aws:s3:::serverless-framework-deployments-us-east-1-3e2cf282-a30b\" with an explicit deny in an identity-based policy\n    at file:///Users/ic-2024/.serverless/releases/4.7.0/package/dist/sf-core.js:1211:36\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async persistentRequest (file:///Users/ic-2024/.serverless/releases/4.7.0/package/dist/sf-core.js:1210:1961)",
       "code": "AWS_S3_LIST_OBJECTS_V2_ACCESS_DENIED"
     },
-    "serviceRawFile": "service: get-games-api\n\nprovider:\n  name: aws\n  runtime: nodejs20.x\n  stage: dev\n  region: us-east-1\n  deploymentBucket:\n    name: serverless-framework-deployments-us-east-1-3e2cf282-a30b  # Usa un bucket predefinido\n  iam:\n    role:\n      statements:\n        - Effect: Allow\n          Action:\n            - logs:CreateLogGroup\n            - logs:CreateLogStream\n            - logs:PutLogEvents\n          Resource: \"arn:aws:logs:us-east-1:*:*\"\n\n        - Effect: Allow\n          Action:\n            - dynamodb:Scan\n            - dynamodb:GetItem\n          Resource:\n            - \"arn:aws:dynamodb:us-east-1:${AWS::AccountId}:table/PlayStationGames\"\n\n        - Effect: Allow\n          Action:\n            - execute-api:Invoke\n          Resource: \"*\"\n\n        - Effect: Allow \n          Action:\n            - s3:CreateBucket\n            - s3:PutObject\n            - s3:GetObject\n            - s3:ListBucket\n          Resource: \"arn:aws:s3:::serverless-framework-deployments-us-east-1-3e2cf282-a30b\"\n\nfunctions:\n  getGames:\n    handler: server.handler\n    memorySize: 256\n    timeout: 10\n    events:\n      - http:\n          path: api/games\n          method: get\n          cors: true\n\n  authLogin:\n    handler: server.handler\n    memorySize: 256\n    timeout: 10\n    events:\n      - http:\n          path: api/auth/login\n          method: post\n          cors: true\n",
+    "serviceRawFile": "service: get-games-api\n\nprovider:\n  name: aws\n  runtime: nodejs20.x\n  stage: dev\n  region: us-east-1\n  deploymentBucket:\n    name: serverless-framework-deployments-us-east-1-3e2cf282-a30b\n  iam:\n    role:\n      statements:\n        - Effect: Allow\n          Action:\n            - logs:CreateLogGroup\n            - logs:CreateLogStream\n            - logs:PutLogEvents\n          Resource: \"arn:aws:logs:us-east-1:*:*\"\n\n        - Effect: Allow\n          Action:\n            - dynamodb:Scan\n            - dynamodb:GetItem\n          Resource:\n            - \"arn:aws:dynamodb:us-east-1:${AWS::AccountId}:table/PlayStationGames\"\n\n        - Effect: Allow\n          Action:\n            - execute-api:Invoke\n          Resource: \"*\"\n\n        - Effect: Allow \n          Action:\n            - s3:CreateBucket\n            - s3:PutObject\n            - s3:GetObject\n            - s3:ListBucket\n            - s3:DeleteObject\n          Resource: \"arn:aws:s3:::serverless-framework-deployments-us-east-1-3e2cf282-a30b\"\n\n        - Effect: Allow\n          Action:\n            - ssm:PutParameter\n            - ssm:GetParameter\n            - ssm:DeleteParameter\n          Resource: \"arn:aws:ssm:us-east-1:*:*\"\n\nfunctions:\n  getGames:\n    handler: server.handler\n    memorySize: 256\n    timeout: 10\n    events:\n      - http:\n          path: api/games\n          method: get\n          cors: true\n\n  authLogin:\n    handler: server.handler\n    memorySize: 256\n    timeout: 10\n    events:\n      - http:\n          path: api/auth/login\n          method: post\n          cors: true\n",
     "command": [
       "deploy"
     ],
