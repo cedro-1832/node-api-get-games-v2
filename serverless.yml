@@ -29,14 +29,16 @@ provider:
             - execute-api:Invoke
           Resource: "*"
 
-        - Effect: Allow 
+        - Effect: Allow
           Action:
             - s3:CreateBucket
             - s3:PutObject
             - s3:GetObject
             - s3:ListBucket
             - s3:DeleteObject
-          Resource: "arn:aws:s3:::serverless-framework-deployments-us-east-1-3e2cf282-a30b"
+          Resource:
+            - "arn:aws:s3:::serverless-framework-deployments-us-east-1-3e2cf282-a30b/*"
+            - "arn:aws:s3:::serverless-framework-deployments-us-east-1-3e2cf282-a30b"
 
         - Effect: Allow
           Action:

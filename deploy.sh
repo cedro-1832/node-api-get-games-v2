@@ -16,41 +16,21 @@ rm -rf .serverless/ node_modules package-lock.json get-games.zip
 npm install --omit=dev
 npm install serverless-http
 
-# 🏗️ Construir la aplicación
+# 🏗️ Construcción
 rm -rf "$DEPLOY_DIR"
 mkdir -p "$DEPLOY_DIR"
 cp -r server.js package.json config controllers middlewares models routes "$DEPLOY_DIR"
 
-# 📤 Empaquetar código para AWS Lambda
+# 📤 Empaquetar código
 cd "$DEPLOY_DIR"
 zip -r "../$FUNCTION_NAME.zip" ./* -x "node_modules/aws-sdk/**"
 cd ..
 
-# 🔍 Obtener ARN del IAM Role
-IAM_ROLE_ARN=$(aws iam get-role --role-name "$IAM_ROLE_NAME" --query 'Role.Arn' --output text --region "$AWS_REGION" --profile "$AWS_PROFILE" || echo "")
-
-if [ -z "$IAM_ROLE_ARN" ]; then
-    echo "❌ Error: No se pudo obtener el ARN del IAM Role. Creando rol IAM..."
-    
-    aws iam create-role --role-name "$IAM_ROLE_NAME" \
-        --assume-role-policy-document '{
-            "Version": "2012-10-17",
-            "Statement": [
-                {
-                    "Effect": "Allow",
-                    "Principal": { "Service": "lambda.amazonaws.com" },
-                    "Action": "sts:AssumeRole"
-                }
-            ]
-        }' --region "$AWS_REGION" --profile "$AWS_PROFILE"
-
-    aws iam attach-role-policy --role-name "$IAM_ROLE_NAME" \
-        --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole \
-        --region "$AWS_REGION" --profile "$AWS_PROFILE"
-
-    echo "✅ IAM Role creado correctamente."
-else
-    echo "✅ IAM Role ya existe."
+# 🔍 Verificar permisos de S3 antes de continuar
+echo "🔍 Verificando permisos de S3..."
+if ! aws s3 ls "s3://serverless-framework-deployments-us-east-1-3e2cf282-a30b" --region "$AWS_REGION" --profile "$AWS_PROFILE" &>/dev/null; then
+    echo "❌ Error: No tienes permisos en S3. Verifica la política IAM."
+    exit 1
 fi
 
 # 🔥 Desplegar API Gateway con Serverless Framework
