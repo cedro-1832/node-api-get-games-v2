@@ -1,5 +1,6 @@
 # Archivos generados por Serverless Framework
 .serverless/
+serverless/
 serverless/get-games-api.zip
 serverless/cloudformation-template-update-stack.json
 .serverless/meta.json
@@ -8,6 +9,15 @@ get-games.zip
 
 # Dependencias de Node.js
 node_modules/
+node_modules/@*/package.json
+node_modules/@smith*/index.js
+node_modules/@*/node-http-handler.js
+node_modules/@*/set-socket-timeout.js
+node_modules/@*/package.json
+node_modules/@*/package.json
+node_modules/@*/package.json
+node_modules/@*/package.json
+node_modules/@*/package.json
 package-lock.json
 
 # Archivos de logs y depuración
