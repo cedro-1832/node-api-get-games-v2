@@ -11,7 +11,7 @@ DEPLOY_DIR="dist"
 
 echo "🚀 Iniciando despliegue de la API Get Games en AWS..."
 
-# 🛠️ Limpiar la caché y reinstalar dependencias
+# 🛠️ Limpiar caché y reinstalar dependencias
 echo "📦 Limpiando caché y reinstalando dependencias..."
 rm -rf .serverless/ node_modules package-lock.json get-games.zip
 npm install --omit=dev
@@ -89,16 +89,3 @@ echo "✅ Función Lambda lista."
 # 🔥 Desplegar API Gateway con Serverless Framework
 echo "🌐 Desplegando API Gateway con Serverless..."
 serverless deploy --stage dev --region "$AWS_REGION" --aws-profile "$AWS_PROFILE"
-
-# 📌 Obtener la URL de la API Gateway correctamente
-echo "🔍 Obteniendo la URL de la API Gateway..."
-API_ID=$(aws apigateway get-rest-apis --region "$AWS_REGION" --profile "$AWS_PROFILE" \
-    --query "items[?contains(name, '$STACK_NAME')].id" --output text)
-
-if [[ -z "$API_ID" ]]; then
-    echo "❌ Error: No se pudo obtener el ID de la API Gateway."
-    exit 1
-else
-    API_URL="https://${API_ID}.execute-api.${AWS_REGION}.amazonaws.com/dev"
-    echo "✅ API desplegada exitosamente: $API_URL"
-fi
