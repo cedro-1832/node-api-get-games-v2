@@ -10,36 +10,32 @@
         "runtime": "nodejs20.x",
         "stage": "dev",
         "region": "us-east-1",
-        "iam": {
-          "role": {
-            "statements": [
-              {
-                "Effect": "Allow",
-                "Action": [
-                  "logs:CreateLogGroup",
-                  "logs:CreateLogStream",
-                  "logs:PutLogEvents"
-                ],
-                "Resource": "arn:aws:logs:us-east-1:*:*"
-              },
-              {
-                "Effect": "Allow",
-                "Action": [
-                  "dynamodb:Scan",
-                  "dynamodb:GetItem"
-                ],
-                "Resource": "arn:aws:dynamodb:us-east-1:${AWS::AccountId}:table/PlayStationGames"
-              },
-              {
-                "Effect": "Allow",
-                "Action": [
-                  "execute-api:Invoke"
-                ],
-                "Resource": "arn:aws:execute-api:us-east-1:${AWS::AccountId}:*/*/*"
-              }
-            ]
+        "iamRoleStatements": [
+          {
+            "Effect": "Allow",
+            "Action": [
+              "logs:CreateLogGroup",
+              "logs:CreateLogStream",
+              "logs:PutLogEvents"
+            ],
+            "Resource": "arn:aws:logs:us-east-1:*:*"
+          },
+          {
+            "Effect": "Allow",
+            "Action": [
+              "dynamodb:Scan",
+              "dynamodb:GetItem"
+            ],
+            "Resource": "arn:aws:dynamodb:us-east-1:${AWS::AccountId}:table/PlayStationGames"
+          },
+          {
+            "Effect": "Allow",
+            "Action": [
+              "execute-api:Invoke"
+            ],
+            "Resource": "arn:aws:execute-api:us-east-1:${AWS::AccountId}:*/*/*"
           }
-        },
+        ],
         "versionFunctions": true,
         "compiledCloudFormationTemplate": {
           "AWSTemplateFormatVersion": "2010-09-09",
@@ -164,7 +160,7 @@
               "Properties": {
                 "Code": {
                   "S3Bucket": "serverless-framework-deployments-us-east-1-3e2cf282-a30b",
-                  "S3Key": "serverless/get-games-api/dev/1740450810834-2025-02-25T02:33:30.834Z/get-games-api.zip"
+                  "S3Key": "serverless/get-games-api/dev/1740451062644-2025-02-25T02:37:42.644Z/get-games-api.zip"
                 },
                 "Handler": "server.handler",
                 "Runtime": "nodejs20.x",
@@ -187,7 +183,7 @@
               "Properties": {
                 "Code": {
                   "S3Bucket": "serverless-framework-deployments-us-east-1-3e2cf282-a30b",
-                  "S3Key": "serverless/get-games-api/dev/1740450810834-2025-02-25T02:33:30.834Z/get-games-api.zip"
+                  "S3Key": "serverless/get-games-api/dev/1740451062644-2025-02-25T02:37:42.644Z/get-games-api.zip"
                 },
                 "Handler": "server.handler",
                 "Runtime": "nodejs20.x",
@@ -205,24 +201,24 @@
                 "AuthLoginLogGroup"
               ]
             },
-            "GetGamesLambdaVersionn9w85vWIMsBYL26LeiKJVECiPd615r37NivZyOR3OM": {
+            "GetGamesLambdaVersionNWzcCtgAre0uhmEKOuZkfiITjf4dWMQ6TvmZ5lhn8": {
               "Type": "AWS::Lambda::Version",
               "DeletionPolicy": "Retain",
               "Properties": {
                 "FunctionName": {
                   "Ref": "GetGamesLambdaFunction"
                 },
-                "CodeSha256": "zuN82FGUmgjI5IxtEOubKrIDq2eeEB1FoVgQ9Z8rGyQ="
+                "CodeSha256": "vGmGV74f9+ETMyCyswl/blp+F+GSSDq01tx6hu/MeNA="
               }
             },
-            "AuthLoginLambdaVersionlsJzO5GtlJhfA9uqMgC3Pa2r54QZXdyNSY92IrqI": {
+            "AuthLoginLambdaVersionPDA9lxalRVcdQexkUj2UnOIWrHsOwzkFx4EPoAA980": {
               "Type": "AWS::Lambda::Version",
               "DeletionPolicy": "Retain",
               "Properties": {
                 "FunctionName": {
                   "Ref": "AuthLoginLambdaFunction"
                 },
-                "CodeSha256": "zuN82FGUmgjI5IxtEOubKrIDq2eeEB1FoVgQ9Z8rGyQ="
+                "CodeSha256": "vGmGV74f9+ETMyCyswl/blp+F+GSSDq01tx6hu/MeNA="
               }
             },
             "ApiGatewayRestApi": {
@@ -470,7 +466,7 @@
                 "AuthLoginLambdaPermissionApiGateway"
               ]
             },
-            "ApiGatewayDeployment1740450800856": {
+            "ApiGatewayDeployment1740451053410": {
               "Type": "AWS::ApiGateway::Deployment",
               "Properties": {
                 "RestApiId": {
@@ -570,7 +566,7 @@
             "GetGamesLambdaFunctionQualifiedArn": {
               "Description": "Current Lambda function version",
               "Value": {
-                "Ref": "GetGamesLambdaVersionn9w85vWIMsBYL26LeiKJVECiPd615r37NivZyOR3OM"
+                "Ref": "GetGamesLambdaVersionNWzcCtgAre0uhmEKOuZkfiITjf4dWMQ6TvmZ5lhn8"
               },
               "Export": {
                 "Name": "sls-get-games-api-dev-GetGamesLambdaFunctionQualifiedArn"
@@ -579,7 +575,7 @@
             "AuthLoginLambdaFunctionQualifiedArn": {
               "Description": "Current Lambda function version",
               "Value": {
-                "Ref": "AuthLoginLambdaVersionlsJzO5GtlJhfA9uqMgC3Pa2r54QZXdyNSY92IrqI"
+                "Ref": "AuthLoginLambdaVersionPDA9lxalRVcdQexkUj2UnOIWrHsOwzkFx4EPoAA980"
               },
               "Export": {
                 "Name": "sls-get-games-api-dev-AuthLoginLambdaFunctionQualifiedArn"
@@ -655,7 +651,7 @@
           "memory": 256,
           "runtime": "nodejs20.x",
           "vpc": {},
-          "versionLogicalId": "GetGamesLambdaVersionn9w85vWIMsBYL26LeiKJVECiPd615r37NivZyOR3OM"
+          "versionLogicalId": "GetGamesLambdaVersionNWzcCtgAre0uhmEKOuZkfiITjf4dWMQ6TvmZ5lhn8"
         },
         "authLogin": {
           "handler": "server.handler",
@@ -696,7 +692,7 @@
           "memory": 256,
           "runtime": "nodejs20.x",
           "vpc": {},
-          "versionLogicalId": "AuthLoginLambdaVersionlsJzO5GtlJhfA9uqMgC3Pa2r54QZXdyNSY92IrqI"
+          "versionLogicalId": "AuthLoginLambdaVersionPDA9lxalRVcdQexkUj2UnOIWrHsOwzkFx4EPoAA980"
         }
       }
     },
@@ -705,36 +701,32 @@
       "runtime": "nodejs20.x",
       "stage": "dev",
       "region": "us-east-1",
-      "iam": {
-        "role": {
-          "statements": [
-            {
-              "Effect": "Allow",
-              "Action": [
-                "logs:CreateLogGroup",
-                "logs:CreateLogStream",
-                "logs:PutLogEvents"
-              ],
-              "Resource": "arn:aws:logs:us-east-1:*:*"
-            },
-            {
-              "Effect": "Allow",
-              "Action": [
-                "dynamodb:Scan",
-                "dynamodb:GetItem"
-              ],
-              "Resource": "arn:aws:dynamodb:us-east-1:${AWS::AccountId}:table/PlayStationGames"
-            },
-            {
-              "Effect": "Allow",
-              "Action": [
-                "execute-api:Invoke"
-              ],
-              "Resource": "arn:aws:execute-api:us-east-1:${AWS::AccountId}:*/*/*"
-            }
-          ]
+      "iamRoleStatements": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "logs:CreateLogGroup",
+            "logs:CreateLogStream",
+            "logs:PutLogEvents"
+          ],
+          "Resource": "arn:aws:logs:us-east-1:*:*"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "dynamodb:Scan",
+            "dynamodb:GetItem"
+          ],
+          "Resource": "arn:aws:dynamodb:us-east-1:${AWS::AccountId}:table/PlayStationGames"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "execute-api:Invoke"
+          ],
+          "Resource": "arn:aws:execute-api:us-east-1:${AWS::AccountId}:*/*/*"
         }
-      },
+      ],
       "versionFunctions": true,
       "compiledCloudFormationTemplate": {
         "AWSTemplateFormatVersion": "2010-09-09",
@@ -859,7 +851,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-1-3e2cf282-a30b",
-                "S3Key": "serverless/get-games-api/dev/1740450810834-2025-02-25T02:33:30.834Z/get-games-api.zip"
+                "S3Key": "serverless/get-games-api/dev/1740451062644-2025-02-25T02:37:42.644Z/get-games-api.zip"
               },
               "Handler": "server.handler",
               "Runtime": "nodejs20.x",
@@ -882,7 +874,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-1-3e2cf282-a30b",
-                "S3Key": "serverless/get-games-api/dev/1740450810834-2025-02-25T02:33:30.834Z/get-games-api.zip"
+                "S3Key": "serverless/get-games-api/dev/1740451062644-2025-02-25T02:37:42.644Z/get-games-api.zip"
               },
               "Handler": "server.handler",
               "Runtime": "nodejs20.x",
@@ -900,24 +892,24 @@
               "AuthLoginLogGroup"
             ]
           },
-          "GetGamesLambdaVersionn9w85vWIMsBYL26LeiKJVECiPd615r37NivZyOR3OM": {
+          "GetGamesLambdaVersionNWzcCtgAre0uhmEKOuZkfiITjf4dWMQ6TvmZ5lhn8": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetGamesLambdaFunction"
               },
-              "CodeSha256": "zuN82FGUmgjI5IxtEOubKrIDq2eeEB1FoVgQ9Z8rGyQ="
+              "CodeSha256": "vGmGV74f9+ETMyCyswl/blp+F+GSSDq01tx6hu/MeNA="
             }
           },
-          "AuthLoginLambdaVersionlsJzO5GtlJhfA9uqMgC3Pa2r54QZXdyNSY92IrqI": {
+          "AuthLoginLambdaVersionPDA9lxalRVcdQexkUj2UnOIWrHsOwzkFx4EPoAA980": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "AuthLoginLambdaFunction"
               },
-              "CodeSha256": "zuN82FGUmgjI5IxtEOubKrIDq2eeEB1FoVgQ9Z8rGyQ="
+              "CodeSha256": "vGmGV74f9+ETMyCyswl/blp+F+GSSDq01tx6hu/MeNA="
             }
           },
           "ApiGatewayRestApi": {
@@ -1165,7 +1157,7 @@
               "AuthLoginLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayDeployment1740450800856": {
+          "ApiGatewayDeployment1740451053410": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -1265,7 +1257,7 @@
           "GetGamesLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetGamesLambdaVersionn9w85vWIMsBYL26LeiKJVECiPd615r37NivZyOR3OM"
+              "Ref": "GetGamesLambdaVersionNWzcCtgAre0uhmEKOuZkfiITjf4dWMQ6TvmZ5lhn8"
             },
             "Export": {
               "Name": "sls-get-games-api-dev-GetGamesLambdaFunctionQualifiedArn"
@@ -1274,7 +1266,7 @@
           "AuthLoginLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "AuthLoginLambdaVersionlsJzO5GtlJhfA9uqMgC3Pa2r54QZXdyNSY92IrqI"
+              "Ref": "AuthLoginLambdaVersionPDA9lxalRVcdQexkUj2UnOIWrHsOwzkFx4EPoAA980"
             },
             "Export": {
               "Name": "sls-get-games-api-dev-AuthLoginLambdaFunctionQualifiedArn"
@@ -1320,11 +1312,11 @@
       "instanceParameters": null
     },
     "error": {
-      "message": "An error occurred: IamRoleLambdaExecution - Resource handler returned message: \"The policy failed legacy parsing (Service: Iam, Status Code: 400, Request ID: a4eb896c-9e70-46a9-8166-3b78e749e2e0)\" (RequestToken: 1161dba2-a7f3-2f57-c393-210b03872c30, HandlerErrorCode: InvalidRequest).",
-      "stack": "ServerlessError3: An error occurred: IamRoleLambdaExecution - Resource handler returned message: \"The policy failed legacy parsing (Service: Iam, Status Code: 400, Request ID: a4eb896c-9e70-46a9-8166-3b78e749e2e0)\" (RequestToken: 1161dba2-a7f3-2f57-c393-210b03872c30, HandlerErrorCode: InvalidRequest).\n    at file:///Users/ic-2024/.serverless/releases/4.7.0/package/dist/sf-core.js:1231:832\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async AwsDeploy.update (file:///Users/ic-2024/.serverless/releases/4.7.0/package/dist/sf-core.js:1231:25551)\n    at async aws:deploy:deploy:updateStack (file:///Users/ic-2024/.serverless/releases/4.7.0/package/dist/sf-core.js:1242:8029)\n    at async PluginManager.runHooks (file:///Users/ic-2024/.serverless/releases/4.7.0/package/dist/sf-core.js:1433:9562)\n    at async PluginManager.invoke (file:///Users/ic-2024/.serverless/releases/4.7.0/package/dist/sf-core.js:1433:10333)\n    at async PluginManager.spawn (file:///Users/ic-2024/.serverless/releases/4.7.0/package/dist/sf-core.js:1433:10696)\n    at async PluginManager.runHooks (file:///Users/ic-2024/.serverless/releases/4.7.0/package/dist/sf-core.js:1433:9562)\n    at async PluginManager.invoke (file:///Users/ic-2024/.serverless/releases/4.7.0/package/dist/sf-core.js:1433:10333)\n    at async PluginManager.run (file:///Users/ic-2024/.serverless/releases/4.7.0/package/dist/sf-core.js:1433:11068)",
+      "message": "An error occurred: IamRoleLambdaExecution - Resource handler returned message: \"The policy failed legacy parsing (Service: Iam, Status Code: 400, Request ID: 51fb4bb5-d7a5-4f8d-bfaa-8640d678b75f)\" (RequestToken: 74105874-1948-2b11-fe74-7c8c6a3038fc, HandlerErrorCode: InvalidRequest).",
+      "stack": "ServerlessError3: An error occurred: IamRoleLambdaExecution - Resource handler returned message: \"The policy failed legacy parsing (Service: Iam, Status Code: 400, Request ID: 51fb4bb5-d7a5-4f8d-bfaa-8640d678b75f)\" (RequestToken: 74105874-1948-2b11-fe74-7c8c6a3038fc, HandlerErrorCode: InvalidRequest).\n    at file:///Users/ic-2024/.serverless/releases/4.7.0/package/dist/sf-core.js:1231:832\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async AwsDeploy.update (file:///Users/ic-2024/.serverless/releases/4.7.0/package/dist/sf-core.js:1231:25551)\n    at async aws:deploy:deploy:updateStack (file:///Users/ic-2024/.serverless/releases/4.7.0/package/dist/sf-core.js:1242:8029)\n    at async PluginManager.runHooks (file:///Users/ic-2024/.serverless/releases/4.7.0/package/dist/sf-core.js:1433:9562)\n    at async PluginManager.invoke (file:///Users/ic-2024/.serverless/releases/4.7.0/package/dist/sf-core.js:1433:10333)\n    at async PluginManager.spawn (file:///Users/ic-2024/.serverless/releases/4.7.0/package/dist/sf-core.js:1433:10696)\n    at async PluginManager.runHooks (file:///Users/ic-2024/.serverless/releases/4.7.0/package/dist/sf-core.js:1433:9562)\n    at async PluginManager.invoke (file:///Users/ic-2024/.serverless/releases/4.7.0/package/dist/sf-core.js:1433:10333)\n    at async PluginManager.run (file:///Users/ic-2024/.serverless/releases/4.7.0/package/dist/sf-core.js:1433:11068)",
       "code": "AWS_CLOUD_FORMATION_UPDATE_STACK_INTERNAL_I_A_M_ROLE_UPDATE_FAILED"
     },
-    "serviceRawFile": "service: get-games-api\n\nprovider:\n  name: aws\n  runtime: nodejs20.x\n  stage: dev\n  region: us-east-1\n  iam:\n    role:\n      statements:\n        - Effect: Allow\n          Action:\n            - logs:CreateLogGroup\n            - logs:CreateLogStream\n            - logs:PutLogEvents\n          Resource: \"arn:aws:logs:us-east-1:*:*\"\n        \n        - Effect: Allow\n          Action:\n            - dynamodb:Scan\n            - dynamodb:GetItem\n          Resource: \"arn:aws:dynamodb:us-east-1:${AWS::AccountId}:table/PlayStationGames\"\n\n        - Effect: Allow\n          Action:\n            - execute-api:Invoke\n          Resource: \"arn:aws:execute-api:us-east-1:${AWS::AccountId}:*/*/*\"\n\nfunctions:\n  getGames:\n    handler: server.handler\n    memorySize: 256\n    timeout: 10\n    package:\n      exclude:\n        - node_modules/aws-sdk/**\n    events:\n      - http:\n          path: api/games\n          method: get\n          cors: true\n\n  authLogin:\n    handler: server.handler\n    memorySize: 256\n    timeout: 10\n    package:\n      exclude:\n        - node_modules/aws-sdk/**\n    events:\n      - http:\n          path: api/auth/login\n          method: post\n          cors: true\n",
+    "serviceRawFile": "service: get-games-api\n\nprovider:\n  name: aws\n  runtime: nodejs20.x\n  stage: dev\n  region: us-east-1\n  iamRoleStatements:\n    - Effect: Allow\n      Action:\n        - logs:CreateLogGroup\n        - logs:CreateLogStream\n        - logs:PutLogEvents\n      Resource: \"arn:aws:logs:us-east-1:*:*\"\n      \n    - Effect: Allow\n      Action:\n        - dynamodb:Scan\n        - dynamodb:GetItem\n      Resource: \"arn:aws:dynamodb:us-east-1:${AWS::AccountId}:table/PlayStationGames\"\n\n    - Effect: Allow\n      Action:\n        - execute-api:Invoke\n      Resource: \"arn:aws:execute-api:us-east-1:${AWS::AccountId}:*/*/*\"\n\nfunctions:\n  getGames:\n    handler: server.handler\n    memorySize: 256\n    timeout: 10\n    package:\n      exclude:\n        - node_modules/aws-sdk/**\n    events:\n      - http:\n          path: api/games\n          method: get\n          cors: true\n\n  authLogin:\n    handler: server.handler\n    memorySize: 256\n    timeout: 10\n    package:\n      exclude:\n        - node_modules/aws-sdk/**\n    events:\n      - http:\n          path: api/auth/login\n          method: post\n          cors: true\n",
     "command": [
       "deploy"
     ],
@@ -1341,7 +1333,7 @@
     "serviceProviderAwsCfStackName": "get-games-api-dev",
     "serviceProviderAwsCfStackId": "arn:aws:cloudformation:us-east-1:249181214292:stack/get-games-api-dev/b981c940-f254-11ef-93ff-0ed90967629b",
     "serviceProviderAwsCfStackCreated": "2025-02-24T02:11:57.641Z",
-    "serviceProviderAwsCfStackUpdated": "2025-02-25T02:25:10.388Z",
+    "serviceProviderAwsCfStackUpdated": "2025-02-25T02:33:49.710Z",
     "serviceProviderAwsCfStackStatus": "UPDATE_ROLLBACK_COMPLETE",
     "serviceProviderAwsCfStackOutputs": [
       {

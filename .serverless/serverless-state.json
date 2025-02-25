@@ -9,36 +9,32 @@
       "runtime": "nodejs20.x",
       "stage": "dev",
       "region": "us-east-1",
-      "iam": {
-        "role": {
-          "statements": [
-            {
-              "Effect": "Allow",
-              "Action": [
-                "logs:CreateLogGroup",
-                "logs:CreateLogStream",
-                "logs:PutLogEvents"
-              ],
-              "Resource": "arn:aws:logs:us-east-1:*:*"
-            },
-            {
-              "Effect": "Allow",
-              "Action": [
-                "dynamodb:Scan",
-                "dynamodb:GetItem"
-              ],
-              "Resource": "arn:aws:dynamodb:us-east-1:${AWS::AccountId}:table/PlayStationGames"
-            },
-            {
-              "Effect": "Allow",
-              "Action": [
-                "execute-api:Invoke"
-              ],
-              "Resource": "arn:aws:execute-api:us-east-1:${AWS::AccountId}:*/*/*"
-            }
-          ]
+      "iamRoleStatements": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "logs:CreateLogGroup",
+            "logs:CreateLogStream",
+            "logs:PutLogEvents"
+          ],
+          "Resource": "arn:aws:logs:us-east-1:*:*"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "dynamodb:Scan",
+            "dynamodb:GetItem"
+          ],
+          "Resource": "arn:aws:dynamodb:us-east-1:${AWS::AccountId}:table/PlayStationGames"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "execute-api:Invoke"
+          ],
+          "Resource": "arn:aws:execute-api:us-east-1:${AWS::AccountId}:*/*/*"
         }
-      },
+      ],
       "versionFunctions": true,
       "compiledCloudFormationTemplate": {
         "AWSTemplateFormatVersion": "2010-09-09",
@@ -115,13 +111,13 @@
                         ]
                       },
                       {
-                        "$ref": "$[\"service\"][\"provider\"][\"iam\"][\"role\"][\"statements\"][0]"
+                        "$ref": "$[\"service\"][\"provider\"][\"iamRoleStatements\"][0]"
                       },
                       {
-                        "$ref": "$[\"service\"][\"provider\"][\"iam\"][\"role\"][\"statements\"][1]"
+                        "$ref": "$[\"service\"][\"provider\"][\"iamRoleStatements\"][1]"
                       },
                       {
-                        "$ref": "$[\"service\"][\"provider\"][\"iam\"][\"role\"][\"statements\"][2]"
+                        "$ref": "$[\"service\"][\"provider\"][\"iamRoleStatements\"][2]"
                       }
                     ]
                   }
@@ -148,7 +144,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-1-3e2cf282-a30b",
-                "S3Key": "serverless/get-games-api/dev/1740450810834-2025-02-25T02:33:30.834Z/get-games-api.zip"
+                "S3Key": "serverless/get-games-api/dev/1740451062644-2025-02-25T02:37:42.644Z/get-games-api.zip"
               },
               "Handler": "server.handler",
               "Runtime": "nodejs20.x",
@@ -171,7 +167,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-1-3e2cf282-a30b",
-                "S3Key": "serverless/get-games-api/dev/1740450810834-2025-02-25T02:33:30.834Z/get-games-api.zip"
+                "S3Key": "serverless/get-games-api/dev/1740451062644-2025-02-25T02:37:42.644Z/get-games-api.zip"
               },
               "Handler": "server.handler",
               "Runtime": "nodejs20.x",
@@ -189,24 +185,24 @@
               "AuthLoginLogGroup"
             ]
           },
-          "GetGamesLambdaVersionn9w85vWIMsBYL26LeiKJVECiPd615r37NivZyOR3OM": {
+          "GetGamesLambdaVersionNWzcCtgAre0uhmEKOuZkfiITjf4dWMQ6TvmZ5lhn8": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetGamesLambdaFunction"
               },
-              "CodeSha256": "zuN82FGUmgjI5IxtEOubKrIDq2eeEB1FoVgQ9Z8rGyQ="
+              "CodeSha256": "vGmGV74f9+ETMyCyswl/blp+F+GSSDq01tx6hu/MeNA="
             }
           },
-          "AuthLoginLambdaVersionlsJzO5GtlJhfA9uqMgC3Pa2r54QZXdyNSY92IrqI": {
+          "AuthLoginLambdaVersionPDA9lxalRVcdQexkUj2UnOIWrHsOwzkFx4EPoAA980": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "AuthLoginLambdaFunction"
               },
-              "CodeSha256": "zuN82FGUmgjI5IxtEOubKrIDq2eeEB1FoVgQ9Z8rGyQ="
+              "CodeSha256": "vGmGV74f9+ETMyCyswl/blp+F+GSSDq01tx6hu/MeNA="
             }
           },
           "ApiGatewayRestApi": {
@@ -454,7 +450,7 @@
               "AuthLoginLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayDeployment1740450800856": {
+          "ApiGatewayDeployment1740451053410": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -554,7 +550,7 @@
           "GetGamesLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetGamesLambdaVersionn9w85vWIMsBYL26LeiKJVECiPd615r37NivZyOR3OM"
+              "Ref": "GetGamesLambdaVersionNWzcCtgAre0uhmEKOuZkfiITjf4dWMQ6TvmZ5lhn8"
             },
             "Export": {
               "Name": "sls-get-games-api-dev-GetGamesLambdaFunctionQualifiedArn"
@@ -563,7 +559,7 @@
           "AuthLoginLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "AuthLoginLambdaVersionlsJzO5GtlJhfA9uqMgC3Pa2r54QZXdyNSY92IrqI"
+              "Ref": "AuthLoginLambdaVersionPDA9lxalRVcdQexkUj2UnOIWrHsOwzkFx4EPoAA980"
             },
             "Export": {
               "Name": "sls-get-games-api-dev-AuthLoginLambdaFunctionQualifiedArn"
@@ -640,7 +636,7 @@
         "memory": 256,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "GetGamesLambdaVersionn9w85vWIMsBYL26LeiKJVECiPd615r37NivZyOR3OM"
+        "versionLogicalId": "GetGamesLambdaVersionNWzcCtgAre0uhmEKOuZkfiITjf4dWMQ6TvmZ5lhn8"
       },
       "authLogin": {
         "handler": "server.handler",
@@ -681,7 +677,7 @@
         "memory": 256,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "AuthLoginLambdaVersionlsJzO5GtlJhfA9uqMgC3Pa2r54QZXdyNSY92IrqI"
+        "versionLogicalId": "AuthLoginLambdaVersionPDA9lxalRVcdQexkUj2UnOIWrHsOwzkFx4EPoAA980"
       }
     },
     "configValidationMode": "warn",
@@ -701,7 +697,7 @@
     "artifact": "/Users/ic-2024/Project/node-api-get-games/.serverless/get-games-api.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/get-games-api/dev/1740450810834-2025-02-25T02:33:30.834Z",
+    "artifactDirectoryName": "serverless/get-games-api/dev/1740451062644-2025-02-25T02:37:42.644Z",
     "artifact": "get-games-api.zip"
   }
 }

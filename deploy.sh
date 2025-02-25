@@ -17,17 +17,21 @@ rm -rf .serverless/ node_modules package-lock.json get-games.zip
 npm install --omit=dev
 npm install serverless-http  # 🔴 Asegurar instalación de serverless-http
 
-# 🗑️ Eliminar archivos innecesarios
-echo "🗑️ Eliminando archivos innecesarios..."
-find . -name "*.zip" -type f -delete
-find . -name "*.log" -type f -delete
-rm -rf .serverless/ node_modules/.bin/ tests/ docs/ node_modules/aws-sdk/
+# 🏗️ Construir la aplicación
+echo "🔧 Construyendo el proyecto..."
+rm -rf "$DEPLOY_DIR"
+mkdir -p "$DEPLOY_DIR"
+cp -r server.js package.json config controllers middlewares models routes "$DEPLOY_DIR"
+
+# 📤 Empaquetar código para AWS Lambda
+echo "📤 Empaquetando código para AWS Lambda..."
+cd "$DEPLOY_DIR"
+zip -r "../$FUNCTION_NAME.zip" ./* -x "node_modules/aws-sdk/**"
+cd ..
 
 # 🔍 Verificar si el IAM Role existe
 echo "🔍 Verificando si el IAM Role $IAM_ROLE_NAME existe..."
-IAM_ROLE_EXISTS=$(aws iam get-role --role-name "$IAM_ROLE_NAME" --query 'Role.RoleName' --output text --region "$AWS_REGION" --profile "$AWS_PROFILE" || true)
-
-if [[ -z "$IAM_ROLE_EXISTS" ]]; then
+if ! aws iam get-role --role-name "$IAM_ROLE_NAME" --region "$AWS_REGION" --profile "$AWS_PROFILE" &>/dev/null; then
     echo "🚀 Creando IAM Role para Lambda..."
     aws iam create-role --role-name "$IAM_ROLE_NAME" \
         --assume-role-policy-document '{
@@ -42,7 +46,6 @@ if [[ -z "$IAM_ROLE_EXISTS" ]]; then
         }' \
         --region "$AWS_REGION" --profile "$AWS_PROFILE"
 
-    # Asignar permisos al role
     aws iam attach-role-policy --role-name "$IAM_ROLE_NAME" \
         --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole \
         --region "$AWS_REGION" --profile "$AWS_PROFILE"
@@ -52,9 +55,8 @@ else
     echo "✅ IAM Role ya existe."
 fi
 
+# 🔍 Obtener ARN del IAM Role
+IAM_ROLE_ARN=$(aws iam get-role --role-name "$IAM_ROLE_NAME" --query 'Role.Arn' --output text --region "$AWS_REGION" --profile "$AWS_PROFILE")
 
-echo "✅ Función Lambda lista."
-
-# 🔥 Desplegar API Gateway con Serverless Framework
-echo "🌐 Desplegando API Gateway con Serverless..."
+echo "✅ Desplegando con Serverless..."
 serverless deploy --stage dev --region "$AWS_REGION" --aws-profile "$AWS_PROFILE"
