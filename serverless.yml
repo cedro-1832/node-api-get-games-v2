@@ -34,6 +34,7 @@ provider:
             - s3:CreateBucket
             - s3:PutObject
             - s3:GetObject
+            - s3:ListBucket
           Resource: "arn:aws:s3:::serverless-framework-deployments-us-east-1-3e2cf282-a30b"
 
 functions:
