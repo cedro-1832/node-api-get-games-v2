@@ -1,5 +1,5 @@
 const { dynamoDB, TABLE_NAME } = require('../config/db');
-const { ScanCommand, GetCommand } = require('@aws-sdk/lib-dynamodb');
+const { ScanCommand } = require('@aws-sdk/lib-dynamodb');
 
 exports.getGames = async (req, res) => {
   try {
@@ -16,6 +16,9 @@ exports.getGames = async (req, res) => {
 
     res.json(data.Items);
   } catch (error) {
+    if (error.name === 'UnrecognizedClientException') {
+      return res.status(401).json({ message: "Error de autenticación en AWS", error: error.message });
+    }
     console.error("Error al obtener juegos:", error);
     res.status(500).json({ message: "Error al obtener juegos", error: error.message });
   }
