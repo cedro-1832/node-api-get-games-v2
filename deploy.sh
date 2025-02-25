@@ -29,7 +29,7 @@ cd "$DEPLOY_DIR"
 zip -r "../$FUNCTION_NAME.zip" ./* -x "node_modules/aws-sdk/**"
 cd ..
 
-# 🔍 Verificar si el IAM Role existe
+# 🔍 Verificar si el IAM Role existe antes de crearlo
 echo "🔍 Verificando si el IAM Role $IAM_ROLE_NAME existe..."
 if ! aws iam get-role --role-name "$IAM_ROLE_NAME" --region "$AWS_REGION" --profile "$AWS_PROFILE" &>/dev/null; then
     echo "🚀 Creando IAM Role para Lambda..."
