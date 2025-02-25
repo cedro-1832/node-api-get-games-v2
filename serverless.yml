@@ -5,12 +5,20 @@ provider:
   runtime: nodejs20.x
   stage: dev
   region: us-east-1
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - dynamodb:Scan
-        - dynamodb:GetItem
-      Resource: "arn:aws:dynamodb:us-east-1:YOUR_AWS_ACCOUNT_ID:table/PlayStationGames"
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - logs:CreateLogGroup
+            - logs:CreateLogStream
+            - logs:PutLogEvents
+          Resource: "arn:aws:logs:us-east-1:*:*"
+        - Effect: Allow
+          Action:
+            - dynamodb:Scan
+            - dynamodb:GetItem
+          Resource: "arn:aws:dynamodb:us-east-1:YOUR_AWS_ACCOUNT_ID:table/PlayStationGames"
 
 functions:
   getGames:
@@ -19,11 +27,10 @@ functions:
     timeout: 10
     package:
       exclude:
-        - node_modules/**
         - node_modules/aws-sdk/**
     events:
       - http:
-          path: dev/api/games
+          path: api/games
           method: get
           cors: true
 
@@ -33,10 +40,9 @@ functions:
     timeout: 10
     package:
       exclude:
-        - node_modules/**
         - node_modules/aws-sdk/**
     events:
       - http:
-          path: dev/api/auth/login
+          path: api/auth/login
           method: post
           cors: true

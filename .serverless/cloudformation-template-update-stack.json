@@ -71,6 +71,23 @@
                       "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/get-games-api-dev*:*:*"
                     }
                   ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:CreateLogGroup",
+                    "logs:CreateLogStream",
+                    "logs:PutLogEvents"
+                  ],
+                  "Resource": "arn:aws:logs:us-east-1:*:*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "dynamodb:Scan",
+                    "dynamodb:GetItem"
+                  ],
+                  "Resource": "arn:aws:dynamodb:us-east-1:YOUR_AWS_ACCOUNT_ID:table/PlayStationGames"
                 }
               ]
             }
@@ -97,7 +114,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-3e2cf282-a30b",
-          "S3Key": "serverless/get-games-api/dev/1740445502405-2025-02-25T01:05:02.405Z/get-games-api.zip"
+          "S3Key": "serverless/get-games-api/dev/1740449615057-2025-02-25T02:13:35.057Z/get-games-api.zip"
         },
         "Handler": "server.handler",
         "Runtime": "nodejs20.x",
@@ -120,7 +137,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-3e2cf282-a30b",
-          "S3Key": "serverless/get-games-api/dev/1740445502405-2025-02-25T01:05:02.405Z/get-games-api.zip"
+          "S3Key": "serverless/get-games-api/dev/1740449615057-2025-02-25T02:13:35.057Z/get-games-api.zip"
         },
         "Handler": "server.handler",
         "Runtime": "nodejs20.x",
@@ -138,24 +155,24 @@
         "AuthLoginLogGroup"
       ]
     },
-    "GetGamesLambdaVersionI2SfgNtIVZqKRAiO8KctuIz2taxcQxyOkYn56XUI": {
+    "GetGamesLambdaVersion832am5YpE2If1r6SILVXUv45vRy4QqedbTRB96N8v8": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetGamesLambdaFunction"
         },
-        "CodeSha256": "E5KlYguKLBmteTbtvhxEPZzT3Rbo+bjUl6170G2/DlM="
+        "CodeSha256": "RplswqGVO3D5wZOLmo8aiZzbBpIz/eBmMG6GIejVebo="
       }
     },
-    "AuthLoginLambdaVersionM5IgcNrGDGM62HbdJegQ8ADPFgkaWSTiqkkcfO6k": {
+    "AuthLoginLambdaVersionjvPDCTtiCPIBQ8O06jgas3mWuyDjyIEAIGrsopi3pE": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "AuthLoginLambdaFunction"
         },
-        "CodeSha256": "E5KlYguKLBmteTbtvhxEPZzT3Rbo+bjUl6170G2/DlM="
+        "CodeSha256": "RplswqGVO3D5wZOLmo8aiZzbBpIz/eBmMG6GIejVebo="
       }
     },
     "ApiGatewayRestApi": {
@@ -170,7 +187,7 @@
         "Policy": ""
       }
     },
-    "ApiGatewayResourceDev": {
+    "ApiGatewayResourceApi": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
         "ParentId": {
@@ -179,29 +196,17 @@
             "RootResourceId"
           ]
         },
-        "PathPart": "dev",
-        "RestApiId": {
-          "Ref": "ApiGatewayRestApi"
-        }
-      }
-    },
-    "ApiGatewayResourceDevApi": {
-      "Type": "AWS::ApiGateway::Resource",
-      "Properties": {
-        "ParentId": {
-          "Ref": "ApiGatewayResourceDev"
-        },
         "PathPart": "api",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
       }
     },
-    "ApiGatewayResourceDevApiGames": {
+    "ApiGatewayResourceApiGames": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
         "ParentId": {
-          "Ref": "ApiGatewayResourceDevApi"
+          "Ref": "ApiGatewayResourceApi"
         },
         "PathPart": "games",
         "RestApiId": {
@@ -209,11 +214,11 @@
         }
       }
     },
-    "ApiGatewayResourceDevApiAuth": {
+    "ApiGatewayResourceApiAuth": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
         "ParentId": {
-          "Ref": "ApiGatewayResourceDevApi"
+          "Ref": "ApiGatewayResourceApi"
         },
         "PathPart": "auth",
         "RestApiId": {
@@ -221,11 +226,11 @@
         }
       }
     },
-    "ApiGatewayResourceDevApiAuthLogin": {
+    "ApiGatewayResourceApiAuthLogin": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
         "ParentId": {
-          "Ref": "ApiGatewayResourceDevApiAuth"
+          "Ref": "ApiGatewayResourceApiAuth"
         },
         "PathPart": "login",
         "RestApiId": {
@@ -233,7 +238,7 @@
         }
       }
     },
-    "ApiGatewayMethodDevApiGamesOptions": {
+    "ApiGatewayMethodApiGamesOptions": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
         "AuthorizationType": "NONE",
@@ -271,14 +276,14 @@
           ]
         },
         "ResourceId": {
-          "Ref": "ApiGatewayResourceDevApiGames"
+          "Ref": "ApiGatewayResourceApiGames"
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
       }
     },
-    "ApiGatewayMethodDevApiAuthLoginOptions": {
+    "ApiGatewayMethodApiAuthLoginOptions": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
         "AuthorizationType": "NONE",
@@ -316,20 +321,20 @@
           ]
         },
         "ResourceId": {
-          "Ref": "ApiGatewayResourceDevApiAuthLogin"
+          "Ref": "ApiGatewayResourceApiAuthLogin"
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
       }
     },
-    "ApiGatewayMethodDevApiGamesGet": {
+    "ApiGatewayMethodApiGamesGet": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
         "HttpMethod": "GET",
         "RequestParameters": {},
         "ResourceId": {
-          "Ref": "ApiGatewayResourceDevApiGames"
+          "Ref": "ApiGatewayResourceApiGames"
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
@@ -369,13 +374,13 @@
         "GetGamesLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayMethodDevApiAuthLoginPost": {
+    "ApiGatewayMethodApiAuthLoginPost": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
         "HttpMethod": "POST",
         "RequestParameters": {},
         "ResourceId": {
-          "Ref": "ApiGatewayResourceDevApiAuthLogin"
+          "Ref": "ApiGatewayResourceApiAuthLogin"
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
@@ -415,7 +420,7 @@
         "AuthLoginLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1740445492499": {
+    "ApiGatewayDeployment1740449605728": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -424,10 +429,10 @@
         "StageName": "dev"
       },
       "DependsOn": [
-        "ApiGatewayMethodDevApiGamesOptions",
-        "ApiGatewayMethodDevApiAuthLoginOptions",
-        "ApiGatewayMethodDevApiGamesGet",
-        "ApiGatewayMethodDevApiAuthLoginPost"
+        "ApiGatewayMethodApiGamesOptions",
+        "ApiGatewayMethodApiAuthLoginOptions",
+        "ApiGatewayMethodApiGamesGet",
+        "ApiGatewayMethodApiAuthLoginPost"
       ]
     },
     "GetGamesLambdaPermissionApiGateway": {
@@ -515,7 +520,7 @@
     "GetGamesLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetGamesLambdaVersionI2SfgNtIVZqKRAiO8KctuIz2taxcQxyOkYn56XUI"
+        "Ref": "GetGamesLambdaVersion832am5YpE2If1r6SILVXUv45vRy4QqedbTRB96N8v8"
       },
       "Export": {
         "Name": "sls-get-games-api-dev-GetGamesLambdaFunctionQualifiedArn"
@@ -524,7 +529,7 @@
     "AuthLoginLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "AuthLoginLambdaVersionM5IgcNrGDGM62HbdJegQ8ADPFgkaWSTiqkkcfO6k"
+        "Ref": "AuthLoginLambdaVersionjvPDCTtiCPIBQ8O06jgas3mWuyDjyIEAIGrsopi3pE"
       },
       "Export": {
         "Name": "sls-get-games-api-dev-AuthLoginLambdaFunctionQualifiedArn"
