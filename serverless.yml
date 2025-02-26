@@ -1,4 +1,4 @@
-service: get-games-api
+service: get-games-api  # ✅ Se añade la propiedad service
 
 provider:
   name: aws
@@ -34,6 +34,7 @@ provider:
             - s3:ListBucket
             - s3:GetObject
             - s3:PutObject
+            - s3:CreateBucket  # ✅ Se añade permiso para crear y listar S3
           Resource: "arn:aws:s3:::serverless-framework-deployments-us-east-1-3e2cf282-a30b"
 
         - Effect: Allow
