@@ -5,10 +5,17 @@ set -e  # Detener el script en caso de error
 # Configuración de AWS
 AWS_PROFILE="serverless-deployer"
 AWS_REGION="us-east-1"
+STACK_NAME="get-games-api-dev"
 BUCKET_NAME="serverless-framework-deployments-us-east-1-3e2cf282-a30b"
 IAM_USER="serverless-deployer"
 IAM_POLICY_NAME="S3FullAccess"
 POLICY_FILE="s3-policy.json"
+
+echo "🚨 Eliminando pila de CloudFormation si está en DELETE_FAILED..."
+aws cloudformation delete-stack --stack-name "$STACK_NAME" --profile "$AWS_PROFILE" --region "$AWS_REGION" || true
+aws cloudformation wait stack-delete-complete --stack-name "$STACK_NAME" --profile "$AWS_PROFILE" --region "$AWS_REGION" || {
+    echo "⚠️ ERROR: No se pudo eliminar la pila completamente. Verifica manualmente en AWS Console."
+}
 
 echo "🔍 Verificando permisos de S3 para el usuario: $IAM_USER..."
 echo "========================================================="
