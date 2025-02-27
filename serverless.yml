@@ -6,7 +6,7 @@ provider:
   stage: dev
   region: us-east-1
   deploymentBucket:
-    name: serverless-framework-deployments-us-east-1-3e2cf282-a30b
+    blockPublicAccess: true  # Serverless Framework creará el bucket automáticamente
   iam:
     role:
       statements:
@@ -37,14 +37,8 @@ provider:
             - s3:PutObject
             - s3:DeleteObject
           Resource:
-            - "arn:aws:s3:::serverless-framework-deployments-us-east-1-3e2cf282-a30b"
-            - "arn:aws:s3:::serverless-framework-deployments-us-east-1-3e2cf282-a30b/*"
-
-        - Effect: Allow
-          Action:
-            - ssm:GetParameter
-            - ssm:PutParameter
-          Resource: "arn:aws:ssm:us-east-1:${AWS::AccountId}:parameter/*"
+            - "arn:aws:s3:::serverless-framework-deployments-*"
+            - "arn:aws:s3:::serverless-framework-deployments-*/*"
 
 functions:
   getGames:

@@ -8,10 +8,9 @@ AWS_PROFILE="serverless-deployer"
 echo "🚀 Iniciando despliegue de la API Get Games en AWS..."
 
 # 📦 Instalando dependencias...
-rm -rf .serverless/ node_modules package-lock.json
+rm -rf node_modules package-lock.json
 npm cache clean --force
 npm install --omit=dev
-
 
 # 📤 Empaquetar código para AWS Lambda
 mkdir -p dist
@@ -21,5 +20,5 @@ cd dist
 zip -r ../get-games.zip ./*
 cd ..
 
-# 🔥 Desplegar API Gateway con Serverless Framework
+# 🔥 Desplegar API Gateway con Serverless Framework sin especificar bucket
 serverless deploy --debug --stage dev --region "$AWS_REGION" --aws-profile "$AWS_PROFILE"
