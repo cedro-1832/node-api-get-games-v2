@@ -5,8 +5,6 @@ provider:
   runtime: nodejs20.x
   stage: dev
   region: us-east-1
-  deploymentBucket:
-    blockPublicAccess: true  # Serverless Framework creará el bucket automáticamente
   iam:
     role:
       statements:
@@ -37,8 +35,8 @@ provider:
             - s3:PutObject
             - s3:DeleteObject
           Resource:
-            - "arn:aws:s3:::serverless-framework-deployments-*"
-            - "arn:aws:s3:::serverless-framework-deployments-*/*"
+            - "arn:aws:s3:::serverless-framework-deployments-us-east-1-*"
+            - "arn:aws:s3:::serverless-framework-deployments-us-east-1-*/*"
 
 functions:
   getGames:
