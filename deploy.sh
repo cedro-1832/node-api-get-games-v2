@@ -34,4 +34,4 @@ zip -r "../$FUNCTION_NAME.zip" ./* -x "node_modules/aws-sdk/**"
 cd ..
 
 # 🔥 Desplegar API Gateway con Serverless Framework
-serverless deploy --stage dev --region "$AWS_REGION" --aws-profile "$AWS_PROFILE"
+serverless deploy --debug --stage dev --region "$AWS_REGION" --aws-profile "$AWS_PROFILE"

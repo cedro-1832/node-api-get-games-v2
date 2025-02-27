@@ -34,8 +34,10 @@ provider:
             - s3:ListBucket
             - s3:GetObject
             - s3:PutObject
-            - s3:CreateBucket  # ✅ Se añade permiso para crear y listar S3
-          Resource: "arn:aws:s3:::serverless-framework-deployments-us-east-1-3e2cf282-a30b"
+            - s3:DeleteObject  # ✅ Se añadió permiso para eliminar objetos de S3
+          Resource:
+            - "arn:aws:s3:::serverless-framework-deployments-us-east-1-3e2cf282-a30b"
+            - "arn:aws:s3:::serverless-framework-deployments-us-east-1-3e2cf282-a30b/*"
 
         - Effect: Allow
           Action:
