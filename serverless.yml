@@ -43,6 +43,7 @@ provider:
         - Effect: Allow
           Action:
             - ssm:GetParameter
+            - ssm:PutParameter
           Resource: "arn:aws:ssm:us-east-1:${AWS::AccountId}:parameter/*"
 
 functions:

@@ -12,11 +12,6 @@ rm -rf .serverless/ node_modules package-lock.json
 npm cache clean --force
 npm install --omit=dev
 
-# 🔍 Verificando permisos antes de proceder
-if ! aws s3 ls "s3://serverless-framework-deployments-us-east-1-3e2cf282-a30b" --region "$AWS_REGION" --profile "$AWS_PROFILE" &>/dev/null; then
-    echo "❌ Error: No tienes permisos en S3. Verifica la política IAM."
-    exit 1
-fi
 
 # 📤 Empaquetar código para AWS Lambda
 mkdir -p dist
