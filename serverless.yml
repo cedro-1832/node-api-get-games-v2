@@ -15,8 +15,7 @@ provider:
             - logs:CreateLogGroup
             - logs:CreateLogStream
             - logs:PutLogEvents
-          Resource:
-            - "arn:aws:logs:us-east-1:*:*"
+          Resource: "arn:aws:logs:us-east-1:*:*"
 
         - Effect: Allow
           Action:
@@ -29,7 +28,7 @@ provider:
         - Effect: Allow
           Action:
             - execute-api:Invoke
-          Resource: "*"
+          Resource: "arn:aws:execute-api:us-east-1:*:*"
 
         - Effect: Allow
           Action:
@@ -43,10 +42,8 @@ provider:
 
         - Effect: Allow
           Action:
-            - ssm:PutParameter
             - ssm:GetParameter
-            - ssm:DeleteParameter
-          Resource: "arn:aws:ssm:us-east-1:*:*"
+          Resource: "arn:aws:ssm:us-east-1:${AWS::AccountId}:parameter/*"
 
 functions:
   getGames:
