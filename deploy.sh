@@ -32,4 +32,6 @@ cd dist
 zip -r ../get-games.zip ./*
 cd ..
 
+export AWS_PROFILE=default
+
 serverless deploy --stage dev --region "$AWS_REGION" --aws-profile "$AWS_PROFILE"
