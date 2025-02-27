@@ -1,4 +1,4 @@
-service: get-games-api  # ✅ Se añade la propiedad service
+service: get-games-api
 
 provider:
   name: aws
@@ -15,14 +15,16 @@ provider:
             - logs:CreateLogGroup
             - logs:CreateLogStream
             - logs:PutLogEvents
-          Resource: "arn:aws:logs:us-east-1:*:*"
+          Resource:
+            - "arn:aws:logs:us-east-1:*:*"
 
         - Effect: Allow
           Action:
             - dynamodb:Scan
             - dynamodb:GetItem
             - dynamodb:Query
-          Resource: "arn:aws:dynamodb:us-east-1:${AWS::AccountId}:table/PlayStationGames"
+          Resource:
+            - "arn:aws:dynamodb:us-east-1:${AWS::AccountId}:table/PlayStationGames"
 
         - Effect: Allow
           Action:
@@ -34,7 +36,7 @@ provider:
             - s3:ListBucket
             - s3:GetObject
             - s3:PutObject
-            - s3:DeleteObject  # ✅ Se añadió permiso para eliminar objetos de S3
+            - s3:DeleteObject
           Resource:
             - "arn:aws:s3:::serverless-framework-deployments-us-east-1-3e2cf282-a30b"
             - "arn:aws:s3:::serverless-framework-deployments-us-east-1-3e2cf282-a30b/*"
