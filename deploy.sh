@@ -16,9 +16,14 @@ fi
 
 echo "🚀 Iniciando despliegue de la API Get Games en AWS..."
 
+# Evitar conflictos en credenciales
+unset AWS_ACCESS_KEY_ID
+unset AWS_SECRET_ACCESS_KEY
+
+# Limpiar e instalar dependencias sin paquetes obsoletos
 rm -rf node_modules package-lock.json
 npm cache clean --force
-npm install --only=prod
+npm install --omit=dev
 
 mkdir -p dist
 cp -r server.js package.json config controllers middlewares models routes dist/

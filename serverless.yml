@@ -1,8 +1,12 @@
+service: get-games-api  # Asegurar que esta línea existe
+
 provider:
   name: aws
   runtime: nodejs20.x
   stage: dev
   region: us-east-1
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
   iam:
     role:
       statements:
@@ -11,8 +15,7 @@ provider:
             - logs:CreateLogGroup
             - logs:CreateLogStream
             - logs:PutLogEvents
-          Resource:
-            - "arn:aws:logs:us-east-1:${AWS::AccountId}:log-group:/aws/lambda/*:*"
+          Resource: "arn:aws:logs:us-east-1:*:*"
 
         - Effect: Allow
           Action:
@@ -25,8 +28,7 @@ provider:
         - Effect: Allow
           Action:
             - execute-api:Invoke
-          Resource:
-            - "arn:aws:execute-api:us-east-1:${AWS::AccountId}:*/*"
+          Resource: "arn:aws:execute-api:us-east-1:*:*"
 
         - Effect: Allow
           Action:
@@ -35,9 +37,8 @@ provider:
             - s3:PutObject
             - s3:DeleteObject
           Resource:
-            - "arn:aws:s3:::serverless-framework-deployments-us-east-1-${AWS::AccountId}"
-            - "arn:aws:s3:::serverless-framework-deployments-us-east-1-${AWS::AccountId}/*"
-
+            - "arn:aws:s3:::serverless-framework-deployments-us-east-1-*"
+            - "arn:aws:s3:::serverless-framework-deployments-us-east-1-*/*"
 
 functions:
   getGames:
