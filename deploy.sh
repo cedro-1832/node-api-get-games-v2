@@ -18,7 +18,7 @@ echo "🚀 Iniciando despliegue de la API Get Games en AWS..."
 
 rm -rf node_modules package-lock.json
 npm cache clean --force
-npm install --omit=dev
+npm install --only=prod
 
 mkdir -p dist
 cp -r server.js package.json config controllers middlewares models routes dist/
