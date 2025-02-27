@@ -1,0 +1,20 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:ListBucket",
+                "s3:GetBucketPolicy",
+                "s3:PutBucketPolicy",
+                "s3:GetObject",
+                "s3:PutObject",
+                "s3:DeleteObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::serverless-framework-deployments-us-east-1-3e2cf282-a30b",
+                "arn:aws:s3:::serverless-framework-deployments-us-east-1-3e2cf282-a30b/*"
+            ]
+        }
+    ]
+}
