@@ -22,13 +22,14 @@ provider:
             - dynamodb:Scan
             - dynamodb:GetItem
             - dynamodb:Query
-          Resource:
-            - "arn:aws:dynamodb:us-east-1:${AWS::AccountId}:table/PlayStationGames"
+          Resource: 
+            - !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/PlayStationGames"
 
         - Effect: Allow
           Action:
             - execute-api:Invoke
-          Resource: "arn:aws:execute-api:us-east-1:*:*"
+          Resource: 
+            - !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:*/*/*"
 
         - Effect: Allow
           Action:
@@ -37,8 +38,8 @@ provider:
             - s3:PutObject
             - s3:DeleteObject
           Resource:
-            - "arn:aws:s3:::serverless-framework-deployments-us-east-1-*"
-            - "arn:aws:s3:::serverless-framework-deployments-us-east-1-*/*"
+            - !Sub "arn:aws:s3:::serverless-framework-deployments-${AWS::Region}-${AWS::AccountId}"
+            - !Sub "arn:aws:s3:::serverless-framework-deployments-${AWS::Region}-${AWS::AccountId}/*"
 
 functions:
   getGames:
