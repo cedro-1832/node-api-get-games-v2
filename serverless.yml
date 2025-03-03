@@ -7,7 +7,9 @@ provider:
   region: us-east-1
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
-    JWT_SECRET: ${env:JWT_SECRET}  # Se mantiene JWT_SECRET
+    DYNAMODB_TABLE: PlayStationGames
+    JWT_SECRET: ${env:JWT_SECRET, 'supersecreto'}  # Usa el valor por defecto 'supersecreto' si no está en env
+    NODE_ENV: production
   iam:
     role:
       statements:
@@ -51,7 +53,17 @@ functions:
       - http:
           path: api/games
           method: get
-          cors: true
+          cors:
+            origin: "*"
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+              - X-Amzn-Trace-Id
+            allowCredentials: false
 
   authLogin:
     handler: server.handler
@@ -61,4 +73,14 @@ functions:
       - http:
           path: api/auth/login
           method: post
-          cors: true
+          cors:
+            origin: "*"
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+              - X-Amzn-Trace-Id
+            allowCredentials: false
