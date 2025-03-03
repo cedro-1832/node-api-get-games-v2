@@ -3,7 +3,7 @@ const { getGames } = require('../controllers/gameController');
 
 const router = express.Router();
 
-// No se requiere autenticación para obtener juegos
+// Permitir filtros a través de query params
 router.get('/', getGames);
 
 module.exports = router;
