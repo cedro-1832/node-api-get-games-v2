@@ -5,11 +5,14 @@ provider:
   runtime: nodejs20.x
   stage: dev
   region: us-east-1
+  deploymentBucket:
+    name: serverless-framework-deployments-us-east-1-249181214292  # Especifica un bucket existente
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
     DYNAMODB_TABLE: PlayStationGames
-    JWT_SECRET: ${env:JWT_SECRET, 'supersecreto'}  # Usa el valor por defecto 'supersecreto' si no está en env
+    JWT_SECRET: ${ssm:/serverless-api/JWT_SECRET, 'supersecreto'}
     NODE_ENV: production
+
   iam:
     role:
       statements:

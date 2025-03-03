@@ -2,19 +2,11 @@ const { DynamoDBClient } = require('@aws-sdk/client-dynamodb');
 const { DynamoDBDocumentClient } = require('@aws-sdk/lib-dynamodb');
 require('dotenv').config();
 
-if (!process.env.AWS_REGION || !process.env.AWS_ACCESS_KEY_ID || !process.env.AWS_SECRET_ACCESS_KEY) {
-  throw new Error("❌ Error: Variables de entorno AWS_REGION, AWS_ACCESS_KEY_ID o AWS_SECRET_ACCESS_KEY no están configuradas.");
-}
-
 const client = new DynamoDBClient({
-  region: process.env.AWS_REGION,
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  }
+  region: process.env.AWS_REGION || "us-east-1", // Usa un valor por defecto
 });
 
 const dynamoDB = DynamoDBDocumentClient.from(client);
-const TABLE_NAME = "PlayStationGames";
+const TABLE_NAME = process.env.DYNAMODB_TABLE || "PlayStationGames"; // Usa un valor por defecto si no está configurado
 
 module.exports = { dynamoDB, TABLE_NAME };
