@@ -5,6 +5,9 @@ AWS_REGION="us-east-1"
 AWS_PROFILE="serverless-deployer"
 BUCKET_NAME="serverless-framework-deployments-us-east-1-$(aws sts get-caller-identity --query 'Account' --output text)"
 
+export AWS_PROFILE="serverless-deployer"  # Usa el perfil AWS configurado en ~/.aws/credentials
+
+
 echo "🔍 Verificando existencia del bucket S3: $BUCKET_NAME..."
 if ! aws s3 ls "s3://$BUCKET_NAME" --profile "$AWS_PROFILE" --region "$AWS_REGION" &>/dev/null; then
     echo "⚠️ El bucket $BUCKET_NAME no existe. Creándolo..."
